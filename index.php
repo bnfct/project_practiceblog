@@ -1,6 +1,6 @@
 <?php
-include_once("system/connection.php");
-$get_articles = $conn->prepare("SELECT pb_articles.title, pb_articles.summary, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0");
+include_once("system/session.php");
+$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0");
 $get_articles->execute();
 $articles_result = $get_articles->get_result();
 ?>
@@ -31,6 +31,12 @@ $articles_result = $get_articles->get_result();
                                 echo "</p>";
                                 echo "<p class=\"article-summary\">".$row["summary"]."</p>";
                                 echo "<img class=\"article-image\" src=\"".$row["picture"]."\"/>";
+                                
+                                if(isset($_SESSION["login_user"])) {
+                                    echo "<a href=\"editArticle.php?id=".$row["id"]."\">Cikk szerkesztése</a>";
+                                }
+
+
                             echo "</div>";
                         }
                     }

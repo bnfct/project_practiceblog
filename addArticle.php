@@ -1,5 +1,6 @@
 <?php
-    include_once("system/connection.php");
+    require_once("system/session.php");
+    require_once("system/checks/check_login.php");
 
     $get_categories = $conn->prepare("SELECT * FROM pb_categories");
     $get_categories->execute();

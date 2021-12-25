@@ -1,12 +1,27 @@
 <?php
-    include_once("system/connection.php");
+    require_once("system/session.php");
+    require_once("system/checks/check_login.php");
     $get_link_id = $_GET["id"];
-    $get_article = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.author, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_categories.title AS categoryname, pb_categories.id AS categoryid FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.id = ?");
+
+    $get_article_exist = $conn->prepare("SELECT count(id) as countid FROM pb_articles WHERE id=?");
+    $get_article_exist->bind_param("i", $get_link_id);
+    $get_article_exist->execute();
+    $result_article_exist = $get_article_exist->get_result();
+    $row_article_exist = $result_article_exist->fetch_assoc();
+    
+    if ($row_article_exist["countid"] == 0) {
+        header("Location: index.php");
+    }
+
+    $get_article = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.author, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_articles.hidden, pb_categories.title AS categoryname, pb_categories.id AS categoryid FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.id = ?");
     $get_article->bind_param("i", $get_link_id);
     $get_article->execute();
     $result_article = $get_article->get_result();
     $row_article = $result_article->fetch_assoc();
     
+    if ($row_article["hidden"] == 1) {
+        header("Location: index.php");
+    }
 
     $get_categories = $conn->prepare("SELECT * FROM pb_categories");
     $get_categories->execute();
@@ -66,7 +81,16 @@
         if ($sql_write->execute() === TRUE) {
             header("Location: index.php");
         }
-}
+    }
+
+    if (isset($_POST['delete'])) {
+        $form_hidden = 1;
+        $sql_write = $conn->prepare("UPDATE `pb_articles` SET `hidden`= ? WHERE id = ?");
+        $sql_write->bind_param("ii", $form_hidden, $get_link_id);
+        if ($sql_write->execute() === TRUE) {
+            header("Location: index.php");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,6 +120,7 @@
              <textarea name="content"><?php echo $row_article["content"];?></textarea><br>
              <input type="text" name="link" maxlength="100" placeholder="Link helye" value="<?php echo $row_article["link"];?>"><br>
              <button type="submit">Küldés</button>
+             <button name="delete">Törlés</button>
         </form>
     </body>
 </html>
