@@ -95,32 +95,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Új cikk / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
+        <title>Cikk szerkesztése / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/form.css">
     </head>
     <body>
-        <form autocomplete="off" method="post" enctype="multipart/form-data">
-            <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" value="<?php echo $row_article["title"];?>"><br>
-            <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" value="<?php echo $row_article["summary"];?>"><br>
-            <select name="category">
-                <option value="<?php echo $row_article["categoryid"] ?>" selected><?php echo $row_article["categoryname"] ?></option>
-                <option disabled>-----</option>
+        <div class="main-contents">
+            <?php
+                include_once("components/header.php");
+            ?>
+            <form class="input-form" autocomplete="off" method="post" enctype="multipart/form-data">
+                <p class="input-title">Cikk cím</p>
+                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" value="<?php echo $row_article["title"];?>"><br>
+                <p class="input-title">Rövid leírás</p>
+                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" value="<?php echo $row_article["summary"];?>"><br>
+                <p class="input-title">Kategória</p>
+                <select name="category">
+                    <option value="<?php echo $row_article["categoryid"] ?>" selected><?php echo $row_article["categoryname"] ?></option>
+                    <option disabled>-----</option>
+                    <?php
+                        while($row = $categories_result->fetch_assoc()) {
+                            echo "<option value=\"".$row["id"]."\">".$row["title"]."</option>";
+                        }
+                    ?>
+                </select><br>
+                <p class="input-title">Kép</p>
+                <input type="file" accept=".png, .jpg, .gif" name="picture"><br>
                 <?php
-                    while($row = $categories_result->fetch_assoc()) {
-                        echo "<option value=\"".$row["id"]."\">".$row["title"]."</option>";
+                    if (mb_strlen($row_article["picture"]) > 3) {
+                        echo "<img src=\"".$row_article["picture"]."\"/>";
                     }
                 ?>
-             </select><br>
-             <input type="file" accept=".png, .jpg, .gif" name="picture"><br>
-             <?php
-                if (mb_strlen($row_article["picture"]) > 3) {
-                    echo "<img src=\"".$row_article["picture"]."\"/>";
-                }
-             ?>
-             <textarea name="content"><?php echo $row_article["content"];?></textarea><br>
-             <input type="text" name="link" maxlength="100" placeholder="Link helye" value="<?php echo $row_article["link"];?>"><br>
-             <button type="submit">Küldés</button>
-             <button name="delete">Törlés</button>
-        </form>
+                <p class="input-title">Tartalom</p>
+                <textarea name="content"><?php echo $row_article["content"];?></textarea><br>
+                <p class="input-title">Link</p>
+                <input type="text" name="link" maxlength="100" placeholder="Link helye" value="<?php echo $row_article["link"];?>"><br>
+                <button type="submit">Szerkesztés</button>
+                <button name="delete">Törlés</button>
+            </form>
+            <?php
+                include_once("components/footer.php");
+            ?>
+        </div>    
     </body>
 </html>
