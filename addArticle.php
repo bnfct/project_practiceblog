@@ -80,16 +80,18 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
     </head>
-    <body>
+    <body onload="addCheck()">
         <div class="main-contents">
             <?php
                 include_once("components/header.php");
             ?>
             <form class="input-form" autocomplete="off" action="addArticle.php" method="post" enctype="multipart/form-data">
-                <p class="input-title">Cím</p>
-                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye"><br>
-                <p class="input-title">Leírás</p>
-                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek"><br>
+                <p class="input-title">Cím<span class="input-counter"><span id="title_counter">0</span>/<span id="title_max"></span></span></p>
+                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" id="title" oninput="linkGenerator();addCheck()"><br>
+
+                <p class="input-title">Leírás<span class="input-counter"><span id="summary_counter">0</span>/<span id="summary_max"></span></span></p>
+                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" id="summary" oninput="addCheck()"><br>
+
                 <p class="input-title">Kategória</p>
                 <select name="category">
                     <?php
@@ -100,15 +102,19 @@
                 </select><br>
                 <p class="input-title">Kép</p>
                 <input type="file" accept=".png, .jpg, .gif" name="picture"><br>
+
                 <p class="input-title">Tartalom</p>
                 <textarea name="content"></textarea><br>
-                <p class="input-title">Link</p>
-                <input type="text" name="link" maxlength="100" placeholder="Link helye"><br>
-                <button type="submit">Küldés</button>
+
+                <p class="input-title">Link<span class="input-counter"><span id="link_counter">0</span>/<span id="link_max"></span></span></p>
+                <input type="text" name="link" maxlength="100" placeholder="Link helye" id="link" oninput="addCheck()"><br>
+
+                <button type="submit" id="submit_button" disabled>Küldés</button>
             </form>
             <?php
                 include_once("components/footer.php");
             ?>
         </div>       
     </body>
+    <script src="/scripts/addArticle_check.js"></script>
 </html>

@@ -100,16 +100,16 @@
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="stylesheet" href="/styles/form.css">
     </head>
-    <body>
+    <body onload="editCheck()">
         <div class="main-contents">
             <?php
                 include_once("components/header.php");
             ?>
             <form class="input-form" autocomplete="off" method="post" enctype="multipart/form-data">
-                <p class="input-title">Cikk cím</p>
-                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" value="<?php echo $row_article["title"];?>"><br>
-                <p class="input-title">Rövid leírás</p>
-                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" value="<?php echo $row_article["summary"];?>"><br>
+                <p class="input-title">Cikk cím<span class="input-counter"><span id="title_counter">0</span>/<span id="title_max"></span></span></p>
+                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" id="title" oninput="linkGenerator();editCheck()" value="<?php echo $row_article["title"];?>"><br>
+                <p class="input-title">Rövid leírás<span class="input-counter"><span id="summary_counter">0</span>/<span id="summary_max"></span></span></p>
+                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" id="summary" oninput="editCheck()" value="<?php echo $row_article["summary"];?>"><br>
                 <p class="input-title">Kategória</p>
                 <select name="category">
                     <option value="<?php echo $row_article["categoryid"] ?>" selected><?php echo $row_article["categoryname"] ?></option>
@@ -129,9 +129,9 @@
                 ?>
                 <p class="input-title">Tartalom</p>
                 <textarea name="content"><?php echo $row_article["content"];?></textarea><br>
-                <p class="input-title">Link</p>
-                <input type="text" name="link" maxlength="100" placeholder="Link helye" value="<?php echo $row_article["link"];?>"><br>
-                <button type="submit">Szerkesztés</button>
+                <p class="input-title">Link<span class="input-counter"><span id="link_counter">0</span>/<span id="link_max"></span></span></p>
+                <input type="text" name="link" maxlength="100" placeholder="Link helye" id="link" oninput="editCheck()" value="<?php echo $row_article["link"];?>"><br>
+                <button type="submit" id="edit_button" disabled>Szerkesztés</button>
                 <button name="delete">Törlés</button>
             </form>
             <?php
@@ -139,4 +139,5 @@
             ?>
         </div>    
     </body>
+    <script src="/scripts/editArticle_check.js"></script>
 </html>
