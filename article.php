@@ -1,8 +1,8 @@
 <?php
 include_once("system/session.php");
-$get_link = $_GET["id"];
-$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_articles.id=?");
-$get_articles->bind_param("i",$get_link);
+$get_link = $_GET["link"];
+$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_articles.link=?");
+$get_articles->bind_param("s",$get_link);
 $get_articles->execute();
 $articles_result = $get_articles->get_result();
 $row = $articles_result->fetch_assoc();
@@ -12,7 +12,7 @@ $row = $articles_result->fetch_assoc();
     <head>
         <title><?php echo $row["title"]?> / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="/styles/main.css">
     </head>
 
     <body>
@@ -32,10 +32,10 @@ $row = $articles_result->fetch_assoc();
                         echo "<span>".$row["displayname"]."</span>";
                         if(isset($_SESSION["login_user"])) {
                             echo "<span class=\"separator\">::</span>";
-                            echo "<a href=\"editArticle.php?id=".$row["id"]."\">Cikk szerkesztése</a>";
+                            echo "<a href=\"/editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
                         }
                     echo "</p></div>";
-                    echo "<div class=\"article-content\"><img class=\"article-image\" src=\"".$row["picture"]."\"/>";
+                    echo "<div class=\"article-content\"><img class=\"article-image\" src=\"/".$row["picture"]."\"/>";
                     echo "<p class=\"article-summary\">".$row["summary"]."</p></div>"; 
                     echo "<pre>".$row["content"]."</pre>";
                 echo "</div>";

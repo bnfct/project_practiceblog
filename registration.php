@@ -1,7 +1,7 @@
 <?php
     require("system/session.php");
     if(isset($_SESSION["login_user"])) {
-        header("Location: index.php");
+        header("Location: /");
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {

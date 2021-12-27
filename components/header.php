@@ -4,15 +4,15 @@
     if(isset($_SESSION["login_user"])) {
         echo "<p>Üdv ".$login_session_displayname."!</p>";
         echo "<div class=\"header-links\">";
-            echo "<a href=\"index.php\">Főoldal</a>";
-            echo "<a href=\"addArticle.php\">Cikk hozzáadása</a>";
-            echo "<a href=\"addCategory.php\">Kategória hozzáadása</a>";
-            echo "<a href=\"logout.php\">Kijelentkezés</a>";
+            echo "<a href=\"/\">Főoldal</a>";
+            echo "<a href=\"/addArticle\">Cikk hozzáadása</a>";
+            echo "<a href=\"/addCategory\">Kategória hozzáadása</a>";
+            echo "<a href=\"/logout\">Kijelentkezés</a>";
         echo "</div>";
     } else {
         echo "<div class=\"header-links\">";
-            echo "<a href=\"login.php\">Bejelentkezés</a>";
-            echo "<a href=\"registration.php\">Regisztráció</a>";
+            echo "<a href=\"/login\">Bejelentkezés</a>";
+            echo "<a href=\"/registration\">Regisztráció</a>";
         echo "</div>";
     }
     ?>

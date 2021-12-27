@@ -1,7 +1,7 @@
 <?php
     require("system/session.php");
     if(isset($_SESSION["login_user"])) {
-        header("Location: index.php");
+        header("Location: /");
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,7 +16,7 @@
         
         if(password_verify($form_password, $row_login["password"])) {
             $_SESSION["login_user"] = $form_username;
-            header("Location: index.php");
+            header("Location: /");
         } else {
             $error = "Nem megfelelő belépési adatok!";
         }
@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
     </head>
-    <body>
+    <body onload="loginCheck()">
         <div class="main-contents">
             <?php
                 include_once("components/header.php");
@@ -42,14 +42,15 @@
                     }
                 ?>
                 <p class="input-title">Felhasználónév</p>
-                <input type="text" name="username" maxlength="50" placeholder="Felhasználónév">
+                <input type="text" name="username" id="username" oninput="loginCheck()" maxlength="50" placeholder="Felhasználónév">
                 <p class="input-title">Jelszó</p>
-                <input type="password" name="password" placeholder="Jelszó">
-                <button type="submit">Belépés</button>
+                <input type="password" name="password" id="password" oninput="loginCheck()" placeholder="Jelszó">
+                <button type="submit" id="login_button" disabled>Belépés</button>
             </form>
             <?php
                 include_once("components/footer.php");
             ?>
         </div>
     </body>
+    <script src="scripts/login_check.js" ></script>
 </html>

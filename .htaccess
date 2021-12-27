@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteRule ^login$ ./login.php
+RewriteRule ^addArticle$ ./addArticle.php
+RewriteRule ^addCategory$ ./addCategory.php
+RewriteRule ^logout$ ./logout.php
+RewriteRule ^registration$ ./registration.php
+RewriteRule ^editArticle/(.*)$ ./editArticle.php?id=$1
+RewriteRule ^([a-zA-Z-0-9-]*)/([a-zA-Z-0-9-]*)$ ./article.php?category=$1&link=$2 [L]

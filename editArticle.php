@@ -10,7 +10,7 @@
     $row_article_exist = $result_article_exist->fetch_assoc();
     
     if ($row_article_exist["countid"] == 0) {
-        header("Location: index.php");
+        header("Location: /");
     }
 
     $get_article = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.author, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_articles.hidden, pb_categories.title AS categoryname, pb_categories.id AS categoryid FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.id = ?");
@@ -20,7 +20,7 @@
     $row_article = $result_article->fetch_assoc();
     
     if ($row_article["hidden"] == 1) {
-        header("Location: index.php");
+        header("Location: /");
     }
 
     $get_categories = $conn->prepare("SELECT * FROM pb_categories");
@@ -79,7 +79,7 @@
         $sql_write = $conn->prepare("UPDATE `pb_articles` SET `title`= ?,`summary`= ?,`published`= ?,`category`= ?,`author`= ?,`picture`= ?,`content`= ?,`link`= ?,`hidden`= ? WHERE id = ?");
         $sql_write->bind_param("sssiisssii", $form_title, $form_summary, $form_published, $form_category, $form_author, $form_picture, $form_content, $form_link, $form_hidden, $get_link_id);
         if ($sql_write->execute() === TRUE) {
-            header("Location: index.php");
+            header("Location: /");
         }
     }
 
@@ -88,7 +88,7 @@
         $sql_write = $conn->prepare("UPDATE `pb_articles` SET `hidden`= ? WHERE id = ?");
         $sql_write->bind_param("ii", $form_hidden, $get_link_id);
         if ($sql_write->execute() === TRUE) {
-            header("Location: index.php");
+            header("Location: /");
         }
     }
 ?>
@@ -97,8 +97,8 @@
     <head>
         <title>Cikk szerkesztése / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/form.css">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/form.css">
     </head>
     <body>
         <div class="main-contents">
@@ -124,7 +124,7 @@
                 <input type="file" accept=".png, .jpg, .gif" name="picture"><br>
                 <?php
                     if (mb_strlen($row_article["picture"]) > 3) {
-                        echo "<img src=\"".$row_article["picture"]."\"/>";
+                        echo "<img src=\"/".$row_article["picture"]."\"/>";
                     }
                 ?>
                 <p class="input-title">Tartalom</p>

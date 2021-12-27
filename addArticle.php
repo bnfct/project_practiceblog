@@ -68,7 +68,7 @@
         $sql_write = $conn->prepare("INSERT INTO `pb_articles`(`title`, `summary`, `published`, `category`, `author`, `picture`, `content`, `link`, `hidden`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $sql_write->bind_param("sssiisssi", $form_title, $form_summary, $form_published, $form_category, $form_author, $form_picture, $form_content, $form_link, $form_hidden);
         if ($sql_write->execute() === TRUE) {
-            header("Location: index.php");
+            header("Location: /");
         }
 }
 ?>

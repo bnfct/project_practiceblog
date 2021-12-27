@@ -13,7 +13,11 @@
     font-size: 14px;
     font-weight:bold;
     margin-top: 10px;
+    display: flex;
 } 
+.input-form .input-title .input-counter {
+    margin-left: auto;
+}
 .input-form button {
     display: block;
     margin: 0 auto;

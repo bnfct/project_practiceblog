@@ -56,7 +56,7 @@
         $sql_write = $conn->prepare("INSERT INTO `pb_categories`(`title`, `summary`, `picture`, `link`) VALUES (?, ?, ?, ?)");
         $sql_write->bind_param("ssss", $form_title, $form_summary, $form_picture, $form_link);
         if ($sql_write->execute() === TRUE) {
-            header("Location: index.php");
+            header("Location: /");
         }
 }
 ?>
@@ -68,25 +68,30 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
     </head>
-    <body>
+    <body onload="categoryCheck()">
         <div class="main-contents">
             <?php
                 include_once("components/header.php");
             ?>
             <form class="input-form" autocomplete="off" action="addCategory.php" method="post" enctype="multipart/form-data">
-                <p class="input-title">Kategória</p>
-                <input type="text" name="title" maxlength="100" placeholder="Kategória címe"><br>
-                <p class="input-title">Leírás</p>
-                <input type="text" name="summary" maxlength="250" placeholder="Kategória rövid leírása"><br>
+                <p class="input-title">Kategória<span class="input-counter"><span id="title_counter">0</span>/<span id="title_max"></span></span></p>
+                <input type="text" name="title" maxlength="100" placeholder="Kategória címe" id="title" oninput="linkGenerator();categoryCheck()"><br>
+                
+                <p class="input-title">Leírás<span class="input-counter"><span id="summary_counter">0</span>/<span id="summary_max"></span></span></p>
+                <input type="text" name="summary" maxlength="250" placeholder="Kategória rövid leírása" id="summary" oninput="categoryCheck()"><br>
+                
                 <p class="input-title">Kép</p>
                 <input type="file" accept=".png, .jpg, .gif" name="picture"><br>
-                <p class="input-title">Link</p>
-                <input type="text" name="link" maxlength="100" placeholder="Link helye"><br>
-                <button type="submit">Küldés</button>
+                
+                <p class="input-title">Link<span class="input-counter"><span id="link_counter">0</span>/<span id="link_max"></span></span></p>
+                <input type="text" name="link" maxlength="100" placeholder="Link helye" id="link" oninput="categoryCheck()"><br>
+                
+                <button type="submit" id="create_button" disabled>Létrehozás</button>
             </form>
             <?php
                 include_once("components/footer.php");
             ?> 
         </div>     
     </body>
+    <script src="scripts/addCategory_check.js"></script>
 </html>
