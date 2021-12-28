@@ -29,6 +29,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="loginCheck()">
         <div class="main-contents">

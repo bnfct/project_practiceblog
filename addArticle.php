@@ -65,10 +65,25 @@
         $form_picture = $sqlfilename;
         $form_content = $_POST['content'];
 
+        $get_link_exist = $conn->prepare("SELECT count(id) as countid FROM pb_articles WHERE link=?");
+        $get_link_exist->bind_param("s", $form_link);
+        $get_link_exist->execute();
+        $result_link_exist = $get_link_exist->get_result();
+        $row_link_exist = $result_link_exist->fetch_assoc();
+        
+        if ($row_link_exist["countid"] == 1) {
+            $form_link .= "-1";
+        }
+
         $sql_write = $conn->prepare("INSERT INTO `pb_articles`(`title`, `summary`, `published`, `category`, `author`, `picture`, `content`, `link`, `hidden`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $sql_write->bind_param("sssiisssi", $form_title, $form_summary, $form_published, $form_category, $form_author, $form_picture, $form_content, $form_link, $form_hidden);
         if ($sql_write->execute() === TRUE) {
-            header("Location: /");
+            $get_header = $conn->prepare("SELECT pb_articles.link AS articlelink, pb_categories.link AS categorylink FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id WHERE pb_articles.link=?");
+            $get_header->bind_param("s", $form_link);
+            $get_header->execute();
+            $result_header = $get_header->get_result();
+            $row_header = $result_header->fetch_assoc();
+            header("Location: /".$row_header["categorylink"]."/".$row_header["articlelink"]);
         }
 }
 ?>
@@ -79,6 +94,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="addCheck()">
         <div class="main-contents">

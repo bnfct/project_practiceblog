@@ -115,3 +115,24 @@ footer p {
     white-space: pre-wrap;
     text-align: justify;
 }
+@media (max-width: 800px) {
+    .main-contents {
+        width: 100%;
+    }
+    .article .article-content {
+        display: block;
+    }
+    .article .article-content .article-image {
+        width: 100%;
+    }
+    .article .article-content .article-summary {
+        margin-left: 0px;
+    }
+    .article {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .header-links {
+        display: block;
+    }
+}

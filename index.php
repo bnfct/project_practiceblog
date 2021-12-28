@@ -10,6 +10,7 @@ $articles_result = $get_articles->get_result();
         <title><?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="styles/main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
     <body>
@@ -34,7 +35,12 @@ $articles_result = $get_articles->get_result();
                                         echo "<a href=\"editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
                                     }
                                 echo "</p></div>";
-                                echo "<div class=\"article-content\"><img class=\"article-image\" src=\"".$row["picture"]."\"/>";
+                                echo "<div class=\"article-content\">";
+                                if(mb_strlen($row["picture"]) > 2) {
+                                    echo "<img class=\"article-image\" src=\"".$row["picture"]."\"/>";
+                                } else {
+                                    echo "<img class=\"article-image\" src=\"img/nopic.jpg\"/>";
+                                }
                                 echo "<p class=\"article-summary\">".$row["summary"]."</p></div>"; 
                             echo "</div>";
                         }

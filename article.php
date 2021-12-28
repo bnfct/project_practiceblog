@@ -10,9 +10,15 @@ $row = $articles_result->fetch_assoc();
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo $row["title"]?> / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
+        <title><?php echo $row["title"];?> / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/styles/main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:title" content="<?php echo htmlspecialchars($row["title"]);?> / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?>">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://www.test.benfact.hu/<?php echo $row["picture"]; ?>">
+        <meta property="og:description" content="<?php echo htmlspecialchars($row["summary"]); ?>">
+        <meta name="Description" content="<?php echo htmlspecialchars($row["summary"]); ?>"> 
     </head>
 
     <body>
@@ -35,7 +41,12 @@ $row = $articles_result->fetch_assoc();
                             echo "<a href=\"/editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
                         }
                     echo "</p></div>";
-                    echo "<div class=\"article-content\"><img class=\"article-image\" src=\"/".$row["picture"]."\"/>";
+                    echo "<div class=\"article-content\">";
+                    if(mb_strlen($row["picture"]) > 2) {
+                        echo "<img class=\"article-image\" src=\"/".$row["picture"]."\"/>";
+                    } else {
+                        echo "<img class=\"article-image\" src=\"/img/nopic.jpg\"/>";
+                    }
                     echo "<p class=\"article-summary\">".$row["summary"]."</p></div>"; 
                     echo "<pre>".$row["content"]."</pre>";
                 echo "</div>";

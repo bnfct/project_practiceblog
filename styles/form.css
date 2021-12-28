@@ -33,3 +33,12 @@
     text-align: center;
     color: rgb(121, 0, 0);
 }
+@media (max-width:800px) {
+    .input-form img {
+        width: 100%;
+    }
+    .input-form {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}

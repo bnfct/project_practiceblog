@@ -13,7 +13,7 @@
         header("Location: /");
     }
 
-    $get_article = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.author, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_articles.hidden, pb_categories.title AS categoryname, pb_categories.id AS categoryid FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.id = ?");
+    $get_article = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, pb_articles.author, pb_articles.published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_articles.hidden, pb_categories.title AS categoryname, pb_categories.id AS categoryid, pb_categories.link AS categorylink FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.id = ?");
     $get_article->bind_param("i", $get_link_id);
     $get_article->execute();
     $result_article = $get_article->get_result();
@@ -76,10 +76,28 @@
         $form_picture = $sqlfilename;
         $form_content = $_POST['content'];
 
+        if ($row_article["link"] != $form_link) {
+            $get_link_exist = $conn->prepare("SELECT count(id) as countid FROM pb_articles WHERE link=?");
+            $get_link_exist->bind_param("s", $form_link);
+            $get_link_exist->execute();
+            $result_link_exist = $get_link_exist->get_result();
+            $row_link_exist = $result_link_exist->fetch_assoc();
+            
+            if ($row_link_exist["countid"] == 1) {
+                $form_link .= "-1";
+            }
+        }
+
+
         $sql_write = $conn->prepare("UPDATE `pb_articles` SET `title`= ?,`summary`= ?,`published`= ?,`category`= ?,`author`= ?,`picture`= ?,`content`= ?,`link`= ?,`hidden`= ? WHERE id = ?");
         $sql_write->bind_param("sssiisssii", $form_title, $form_summary, $form_published, $form_category, $form_author, $form_picture, $form_content, $form_link, $form_hidden, $get_link_id);
         if ($sql_write->execute() === TRUE) {
-            header("Location: /");
+            $get_header = $conn->prepare("SELECT pb_articles.link AS articlelink, pb_categories.link AS categorylink FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id WHERE pb_articles.link=?");
+            $get_header->bind_param("s", $form_link);
+            $get_header->execute();
+            $result_header = $get_header->get_result();
+            $row_header = $result_header->fetch_assoc();
+            header("Location: /".$row_header["categorylink"]."/".$row_header["articlelink"]);
         }
     }
 
@@ -99,6 +117,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="stylesheet" href="/styles/form.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="editCheck()">
         <div class="main-contents">

@@ -53,6 +53,16 @@
         }
         $form_picture = $sqlfilename;
         
+        $get_link_exist = $conn->prepare("SELECT count(id) as countid FROM pb_categories WHERE link=?");
+        $get_link_exist->bind_param("s", $form_link);
+        $get_link_exist->execute();
+        $result_link_exist = $get_link_exist->get_result();
+        $row_link_exist = $result_link_exist->fetch_assoc();
+        
+        if ($row_link_exist["countid"] == 1) {
+            $form_link .= "-1";
+        }
+
         $sql_write = $conn->prepare("INSERT INTO `pb_categories`(`title`, `summary`, `picture`, `link`) VALUES (?, ?, ?, ?)");
         $sql_write->bind_param("ssss", $form_title, $form_summary, $form_picture, $form_link);
         if ($sql_write->execute() === TRUE) {
@@ -67,6 +77,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/form.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="categoryCheck()">
         <div class="main-contents">
