@@ -1,5 +1,6 @@
 Options +FollowSymLinks
-RewriteEngine on
+RewriteEngine On
+RewriteBase /
 
 RewriteRule ^login$ ./login.php
 RewriteRule ^addArticle$ ./addArticle.php

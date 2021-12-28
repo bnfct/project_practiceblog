@@ -60,7 +60,7 @@
             $form_link = "nem-fog-menni";
         }
         $form_published = date("Y-m-d H:i:s");
-        $form_author = 1;
+        $form_author = $login_session_id;
         $form_hidden = 0;
         $form_picture = $sqlfilename;
         $form_content = $_POST['content'];

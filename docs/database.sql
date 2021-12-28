@@ -40,5 +40,5 @@ CREATE TABLE pb_base (
    siteversion varchar(255) NOT NULL,
    sitefooter varchar(255) NOT NULL
 );
-INSERT INTO pb_base (sitename, siteversion, sitefooter) VALUES ("PracticeBlog","v0.01","Created By Benfact 2021");
+INSERT INTO pb_base (sitename, siteversion, sitefooter) VALUES ("PracticeBlog","v0.10","Created By Benfact 2021");
 

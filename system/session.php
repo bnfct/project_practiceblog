@@ -5,7 +5,7 @@
     if(isset($_SESSION["login_user"])) {
         $user_check=$_SESSION["login_user"];
 
-        $get_user = $conn->prepare("SELECT username, displayname, role FROM pb_users WHERE username=?");
+        $get_user = $conn->prepare("SELECT id, username, displayname, role FROM pb_users WHERE username=?");
         $get_user->bind_param("s", $user_check);
         $get_user->execute();
         $result_user = $get_user->get_result();
@@ -13,5 +13,6 @@
         $login_session_username = $row_user["username"];
         $login_session_displayname = $row_user["displayname"];
         $login_session_role = $row_user["role"];
+        $login_session_id = $row_user["id"];
     }
 ?>

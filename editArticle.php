@@ -22,6 +22,9 @@
     if ($row_article["hidden"] == 1) {
         header("Location: /");
     }
+    if ($row_article["author"] != $login_session_id) {
+        header("Location: /");
+    }
 
     $get_categories = $conn->prepare("SELECT * FROM pb_categories");
     $get_categories->execute();

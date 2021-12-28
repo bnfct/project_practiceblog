@@ -1,7 +1,7 @@
 <?php
 include_once("system/session.php");
 $get_link = $_GET["link"];
-$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_articles.link=?");
+$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.author, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_articles.link=?");
 $get_articles->bind_param("s",$get_link);
 $get_articles->execute();
 $articles_result = $get_articles->get_result();
@@ -37,8 +37,10 @@ $row = $articles_result->fetch_assoc();
                         echo "<span class=\"separator\">::</span>";
                         echo "<span>".$row["displayname"]."</span>";
                         if(isset($_SESSION["login_user"])) {
-                            echo "<span class=\"separator\">::</span>";
-                            echo "<a href=\"/editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
+                            if($row["author"] == $login_session_id) {
+                                echo "<span class=\"separator\">::</span>";
+                                echo "<a href=\"editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
+                            }
                         }
                     echo "</p></div>";
                     echo "<div class=\"article-content\">";
