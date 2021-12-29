@@ -1,6 +1,7 @@
 <?php
     require_once("system/session.php");
     require_once("system/checks/check_login.php");
+    require_once("system/checks/check_admin.php");
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         //we want matching id's to the article cover picture, so we get the latest id from the DB and adding +1 to it
@@ -51,6 +52,8 @@
         if(mb_strlen($form_link) > 100) {
             $form_link = "nem-fog-menni";
         }
+        $form_link = str_replace(' ', '-', $form_link);
+        $form_link = preg_replace('/[^A-Za-z0-9\-]/', '', $form_link);
         $form_picture = $sqlfilename;
         
         $get_link_exist = $conn->prepare("SELECT count(id) as countid FROM pb_categories WHERE link=?");

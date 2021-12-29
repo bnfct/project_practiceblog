@@ -31,7 +31,8 @@ CREATE TABLE pb_users (
    motto TEXT,
    role INT NOT NULL,
    active INT NOT NULL,
-   regdate DATETIME NOT NULL
+   regdate DATETIME NOT NULL,
+   code varchar(255) NOT NULL
 );
 INSERT INTO pb_users (username, password, displayname, email, profilepic, motto, role, active, regdate) VALUES ("benfact","123","Ben","asd@asd.com","","lol",1,1,"2021-12-23 20:41:01");
 CREATE TABLE pb_base (

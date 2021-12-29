@@ -6,7 +6,9 @@
         echo "<div class=\"header-links\">";
             echo "<a href=\"/\">Főoldal</a>";
             echo "<a href=\"/addArticle\">Cikk hozzáadása</a>";
-            echo "<a href=\"/addCategory\">Kategória hozzáadása</a>";
+            if ($login_session_role == 1)  {
+                echo "<a href=\"/addCategory\">Kategória hozzáadása</a>";
+            }
             echo "<a href=\"/logout\">Kijelentkezés</a>";
         echo "</div>";
     } else {

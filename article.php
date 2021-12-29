@@ -29,17 +29,17 @@ $row = $articles_result->fetch_assoc();
             <div class="articles-container">
                 <?php
                 echo "<div class=\"article\">";
-                    echo "<div class=\"article-header\"><h2>".$row["title"]."</h2>";
+                    echo "<div class=\"article-header\"><h2>".htmlspecialchars($row["title"])."</h2>";
                     echo "<p class=\"article-data\">";
                         echo "<span>".$row["published"]."</span>";
                         echo "<span class=\"separator\">::</span>";
-                        echo "<span>".$row["categoryname"]."</span>";
+                        echo "<span>".htmlspecialchars($row["categoryname"])."</span>";
                         echo "<span class=\"separator\">::</span>";
-                        echo "<span>".$row["displayname"]."</span>";
+                        echo "<span>".htmlspecialchars($row["displayname"])."</span>";
                         if(isset($_SESSION["login_user"])) {
                             if($row["author"] == $login_session_id) {
                                 echo "<span class=\"separator\">::</span>";
-                                echo "<a href=\"editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
+                                echo "<a href=\"/editArticle/".$row["id"]."\">Cikk szerkesztése</a>";
                             }
                         }
                     echo "</p></div>";
@@ -49,8 +49,8 @@ $row = $articles_result->fetch_assoc();
                     } else {
                         echo "<img class=\"article-image\" src=\"/img/nopic.jpg\"/>";
                     }
-                    echo "<p class=\"article-summary\">".$row["summary"]."</p></div>"; 
-                    echo "<pre>".$row["content"]."</pre>";
+                    echo "<p class=\"article-summary\">".htmlspecialchars($row["summary"])."</p></div>"; 
+                    echo "<pre>".htmlspecialchars($row["content"])."</pre>";
                 echo "</div>";
                 ?>    
             </div>

@@ -2,7 +2,10 @@ Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^activateReg/(.*)$ ./activateReg.php?code=$1
 RewriteRule ^login$ ./login.php
+RewriteRule ^checkEmail$ ./checkEmail.php
+RewriteRule ^login/(.*)$ ./login.php?login=$1
 RewriteRule ^addArticle$ ./addArticle.php
 RewriteRule ^addCategory$ ./addCategory.php
 RewriteRule ^logout$ ./logout.php

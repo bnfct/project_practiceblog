@@ -59,6 +59,8 @@
         if(mb_strlen($form_link) > 100) {
             $form_link = "nem-fog-menni";
         }
+        $form_link = str_replace(' ', '-', $form_link);
+        $form_link = preg_replace('/[^A-Za-z0-9\-]/', '', $form_link);
         $form_published = date("Y-m-d H:i:s");
         $form_author = $login_session_id;
         $form_hidden = 0;

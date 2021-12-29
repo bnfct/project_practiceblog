@@ -73,6 +73,8 @@
         if(mb_strlen($form_link) > 100) {
             $form_link = "nem-fog-menni";
         }
+        $form_link = str_replace(' ', '-', $form_link);
+        $form_link = preg_replace('/[^A-Za-z0-9\-]/', '', $form_link);
         $form_published = $row_article["published"];
         $form_author = $row_article["author"];
         $form_hidden = 0;
@@ -129,9 +131,9 @@
             ?>
             <form class="input-form" autocomplete="off" method="post" enctype="multipart/form-data">
                 <p class="input-title">Cikk cím<span class="input-counter"><span id="title_counter">0</span>/<span id="title_max"></span></span></p>
-                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" id="title" oninput="linkGenerator();editCheck()" value="<?php echo $row_article["title"];?>"><br>
+                <input type="text" name="title" maxlength="100" placeholder="Cikk címének helye" id="title" oninput="linkGenerator();editCheck()" value="<?php echo htmlspecialchars($row_article["title"]);?>"><br>
                 <p class="input-title">Rövid leírás<span class="input-counter"><span id="summary_counter">0</span>/<span id="summary_max"></span></span></p>
-                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" id="summary" oninput="editCheck()" value="<?php echo $row_article["summary"];?>"><br>
+                <input type="text" name="summary" maxlength="250" placeholder="Rövid leírása a cikknek" id="summary" oninput="editCheck()" value="<?php echo htmlspecialchars($row_article["summary"]);?>"><br>
                 <p class="input-title">Kategória</p>
                 <select name="category">
                     <option value="<?php echo $row_article["categoryid"] ?>" selected><?php echo $row_article["categoryname"] ?></option>
@@ -150,9 +152,9 @@
                     }
                 ?>
                 <p class="input-title">Tartalom</p>
-                <textarea name="content"><?php echo $row_article["content"];?></textarea><br>
+                <textarea name="content"><?php echo htmlspecialchars($row_article["content"]);?></textarea><br>
                 <p class="input-title">Link<span class="input-counter"><span id="link_counter">0</span>/<span id="link_max"></span></span></p>
-                <input type="text" name="link" maxlength="100" placeholder="Link helye" id="link" oninput="editCheck()" value="<?php echo $row_article["link"];?>"><br>
+                <input type="text" name="link" maxlength="100" placeholder="Link helye" id="link" oninput="editCheck()" value="<?php echo htmlspecialchars($row_article["link"]);?>"><br>
                 <button type="submit" id="edit_button" disabled>Szerkesztés</button>
                 <button name="delete">Törlés</button>
             </form>
