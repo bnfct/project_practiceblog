@@ -13,6 +13,7 @@
         echo "</div>";
     } else {
         echo "<div class=\"header-links\">";
+            echo "<a href=\"/\">Főoldal</a>";
             echo "<a href=\"/login\">Bejelentkezés</a>";
             echo "<a href=\"/registration\">Regisztráció</a>";
         echo "</div>";
