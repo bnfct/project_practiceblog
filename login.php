@@ -14,21 +14,25 @@
         $result_exist = $get_exist->get_result();
         $row_exist = $result_exist->fetch_assoc();
         if ($row_exist["countid"] == 1) {
-            $get_login = $conn->prepare("SELECT username, password FROM pb_users WHERE username=?");
+            $get_login = $conn->prepare("SELECT username, password, active FROM pb_users WHERE username=?");
             $get_login->bind_param("s", $form_username);
             $get_login->execute();
             $result_login = $get_login->get_result();
             $row_login = $result_login->fetch_assoc();
 
-            if (mb_strlen($row_login["password"]) < 2) {
-                $row_login["password"] = "";
-            }
-        
-            if(password_verify($form_password, $row_login["password"])) {
-                $_SESSION["login_user"] = $form_username;
-                header("Location: /");
+            if ($row_login["active"] == 1) {
+                if (mb_strlen($row_login["password"]) < 2) {
+                    $row_login["password"] = "";
+                }
+            
+                if(password_verify($form_password, $row_login["password"])) {
+                    $_SESSION["login_user"] = $form_username;
+                    header("Location: /");
+                } else {
+                    $error = "Nem megfelelő belépési adatok!";
+                } 
             } else {
-                $error = "Nem megfelelő belépési adatok!";
+                $error = "Ez a felhasználói fiók még nem került aktiválásra!";
             }
         } else {
             $error = "Nem megfelelő belépési adatok!";

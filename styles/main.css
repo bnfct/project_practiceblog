@@ -53,6 +53,9 @@ footer p {
     font-weight: bold;
     text-align: center;
 }
+.articles-container {
+    height: calc(100vh - 200px);
+}
 .article {
     margin-bottom: 10px;
     border-bottom: 1px solid grey;
