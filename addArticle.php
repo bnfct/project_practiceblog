@@ -136,3 +136,6 @@
     </body>
     <script src="/scripts/addArticle_check.js"></script>
 </html>
+<?php
+    $conn->close();
+?>

@@ -54,5 +54,7 @@ $articles_result = $get_articles->get_result();
                 ?>  
         </div>          
     </body>
-
 </html>
+<?php
+    $conn->close();
+?>

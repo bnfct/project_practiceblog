@@ -109,3 +109,6 @@
     </body>
     <script src="scripts/addCategory_check.js"></script>
 </html>
+<?php
+    $conn->close();
+?>

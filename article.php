@@ -1,6 +1,7 @@
 <?php
 include_once("system/session.php");
 $get_link = $_GET["link"];
+
 $get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.author, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.title AS categoryname, pb_categories.link AS categorylink FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_articles.link=?");
 $get_articles->bind_param("s",$get_link);
 $get_articles->execute();
@@ -16,7 +17,7 @@ $row = $articles_result->fetch_assoc();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta property="og:title" content="<?php echo htmlspecialchars($row["title"]);?> / <?php echo $sitedatasql_data["sitename"]." ".$sitedatasql_data["siteversion"]; ?>">
         <meta property="og:type" content="website">
-        <meta property="og:image" content="https://www.test.benfact.hu/<?php echo $row["picture"]; ?>">
+        <meta property="og:image" content="http://test.benfact.hu/<?php echo $row["picture"]; ?>">
         <meta property="og:description" content="<?php echo htmlspecialchars($row["summary"]); ?>">
         <meta name="Description" content="<?php echo htmlspecialchars($row["summary"]); ?>"> 
     </head>
@@ -61,3 +62,6 @@ $row = $articles_result->fetch_assoc();
     </body>
 
 </html>
+<?php
+    $conn->close();
+?>

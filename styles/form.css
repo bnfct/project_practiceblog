@@ -18,6 +18,9 @@
 .input-form .input-title .input-counter {
     margin-left: auto;
 }
+.input-form img {
+    width: 100%;
+}
 .input-form button {
     display: block;
     margin: 0 auto;

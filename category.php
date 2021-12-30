@@ -81,3 +81,6 @@ $articles_result = $get_articles->get_result();
     </body>
 
 </html>
+<?php
+    $conn->close();
+?>

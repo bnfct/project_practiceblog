@@ -14,4 +14,5 @@
     } else {
         header("Location: /");
     }
+    $conn->close();
 ?>

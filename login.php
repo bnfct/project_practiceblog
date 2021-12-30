@@ -77,3 +77,6 @@
     </body>
     <script src="/scripts/login_check.js" ></script>
 </html>
+<?php
+    $conn->close();
+?>
