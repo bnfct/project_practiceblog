@@ -105,6 +105,28 @@ footer p {
 .article .article-content {
     display: flex;
 }
+.main-contents .user-content-container .profilepic {
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+    flex: none; 
+}
+.main-contents .user-content-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+.main-contents .user-content-container .user-texts {
+    text-align: left;
+    margin: 0;
+    margin-left: 10px;
+}
+.main-contents .user-content-container .user-texts h2 {
+    margin: 0;
+    text-align: justify;
+}
+.main-contents .user-content-container .user-texts p {
+    margin: 0;
+}
 .article .article-content .article-image {
     width: 450px;
     height: 240px;

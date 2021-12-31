@@ -11,7 +11,8 @@ RewriteRule ^addCategory$ ./addCategory.php
 RewriteRule ^logout$ ./logout.php
 RewriteRule ^registration$ ./registration.php
 RewriteRule ^editArticle/(.*)$ ./editArticle.php?id=$1
-RewriteCond %{REQUEST_URI} !/(styles|img|scripts|activateReg|login|checkEmail|addArticle|addCategory|logout|registration|editArticle)
+RewriteRule ^user/(.*)$ ./user.php?username=$1
+RewriteCond %{REQUEST_URI} !/(styles|img|scripts|activateReg|login|checkEmail|addArticle|addCategory|logout|registration|editArticle|user)
 RewriteRule ^([a-zA-Z-0-9-]*)/([a-zA-Z-0-9-]*)$ ./article.php?category=$1&link=$2 [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

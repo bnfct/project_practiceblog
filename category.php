@@ -18,7 +18,7 @@ $result_category = $get_category->get_result();
 $row_category = $result_category->fetch_assoc();
 
 
-$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.author, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_categories.link AS categorylink, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_categories.link=? ORDER BY pb_articles.id DESC");
+$get_articles = $conn->prepare("SELECT pb_articles.id, pb_articles.author, pb_articles.title, pb_articles.summary, date_format(pb_articles.published, \"%Y-%m-%d %H:%i\") AS published, pb_articles.picture, pb_articles.content, pb_articles.link, pb_users.displayname, pb_users.username, pb_categories.link AS categorylink, pb_categories.title AS categoryname FROM pb_articles INNER JOIN pb_categories ON pb_articles.category = pb_categories.id INNER JOIN pb_users ON pb_articles.author = pb_users.id WHERE pb_articles.hidden=0 AND pb_categories.link=? ORDER BY pb_articles.id DESC");
 $get_articles->bind_param("s", $get_category_link);
 $get_articles->execute();
 $articles_result = $get_articles->get_result();
@@ -52,7 +52,7 @@ $articles_result = $get_articles->get_result();
                                     echo "<span class=\"separator\">::</span>";
                                     echo "<a href=\"/".$row["categorylink"]."\">".htmlspecialchars($row["categoryname"])."</a>";
                                     echo "<span class=\"separator\">::</span>";
-                                    echo "<span>".htmlspecialchars($row["displayname"])."</span>";
+                                    echo "<a href=\"/user/".$row["username"]."\">".htmlspecialchars($row["displayname"])."</a>";
                                     if(isset($_SESSION["login_user"])) {
                                         if($row["author"] == $login_session_id) {
                                             echo "<span class=\"separator\">::</span>";
