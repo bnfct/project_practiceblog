@@ -162,6 +162,15 @@ footer p {
     .article .article-content {
         display: block;
     }
+    .main-contents .user-content-container {
+        display: block;
+        width: 100%;
+    }
+    .main-contents .user-content-container .profilepic {
+       width: 100%;
+       height: auto;
+       margin-bottom: 10px;
+    }
     .article .article-content .article-image {
         width: 100%;
     }
